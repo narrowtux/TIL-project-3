@@ -1,0 +1,41 @@
+import java_cup.runtime.*;
+import java.util.Vector;
+
+
+/* Terminals (tokens returned by the scanner). */
+terminal            AND, OR, NEG, IMP, BIIMP, EXISTS, FORALL;
+terminal            LPAREN, RPAREN, COMMA;
+terminal String     RELSYMBOL;
+terminal String     FUNSYMBOL;
+
+
+/* Non terminals */
+non terminal Formula      formula;
+non terminal Term         term;
+non terminal Vector<Term> termlist;
+	
+/* Precedences */
+precedence left     BIIMP;
+precedence right    IMP;
+precedence left     OR;
+precedence left     AND;
+precedence left     NEG, EXISTS, FORALL;
+
+/* The grammar */
+
+
+formula ::= RELSYMBOL:s LPAREN termlist:t RPAREN   {: RESULT = new RelationFormula(s,t); :}
+          | LPAREN formula:f RPAREN                {: RESULT = f; :}
+          | formula:f AND formula:g                {: RESULT = new Conjunction(f,g); :}
+          | formula:f OR formula:g                 {: RESULT = new Disjunction(f,g); :}
+          | NEG formula:f                          {: RESULT = new Negation(f); :}
+          | formula:f IMP formula:g                {: RESULT = new Implication(f,g); :}
+          | formula:f BIIMP formula:g              {: RESULT = new Biimplication(f,g); :}
+          | EXISTS FUNSYMBOL:x formula:f           {: RESULT = new ExistsQuantification(x,f); :}
+          | FORALL FUNSYMBOL:x formula:f           {: RESULT = new ForallQuantification(x,f); :};
+
+termlist ::= term:t                     {: Vector<Term> ts = new Vector<Term>(); ts.add(t); RESULT = ts; :}
+           | term:t COMMA termlist:tl   {: tl.add(0,t); RESULT = tl; :} ;
+
+term ::= FUNSYMBOL:h                           {: RESULT = new Term(new FunctionSymbol(h,0), new java.util.Vector<Term>()); :}
+       | FUNSYMBOL:h LPAREN termlist:tl RPAREN {: RESULT = new Term(new FunctionSymbol(h, tl.size()), tl); :};
