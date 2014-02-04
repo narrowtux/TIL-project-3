@@ -3,7 +3,6 @@ package de.unikassel.til3.term;
 import de.unikassel.til3.formula.FunctionSymbol;
 
 import java.util.Vector;
-import java.lang.StringBuffer;
 
 public class Term {
 
@@ -11,49 +10,49 @@ public class Term {
     private Vector<Term> subterms;
 
     public Term(FunctionSymbol s, Vector<Term> ts) {
-	symbol = s;
-	subterms = ts;
+        symbol = s;
+        subterms = ts;
     }
 
     protected Term() {
-	symbol = null;
-	subterms = new Vector<Term>();
+        symbol = null;
+        subterms = new Vector<Term>();
     }
 
     public FunctionSymbol getTopSymbol() {
-	return symbol;
+        return symbol;
     }
 
     public Vector<Term> getSubterms() {
-	return subterms;
+        return subterms;
     }
 
     public Term makeCopy() {
-	Vector<Term> ts = new Vector<Term>();
+        Vector<Term> ts = new Vector<Term>();
 
-	for (Term t: subterms) {
-	    ts.add(t.makeCopy());
-	}
+        for (Term t : subterms) {
+            ts.add(t.makeCopy());
+        }
 
-	return new Term(symbol,ts);
+        return new Term(symbol, ts);
     }
 
     public String toString() {
-	StringBuffer s = new StringBuffer();
-	boolean first = true;
+        StringBuffer s = new StringBuffer();
+        boolean first = true;
 
-	s.append(symbol.toString());
-	if (symbol.getArity() > 0) {
-	    s.append("(");
-	    for (Term t: subterms) {
-		if (!first) {
-		    s.append(",");
-		}
-		s.append(t.toString());
-		first = false;
-	    }
-	    s.append(")");
-	}
-	return s.toString();
+        s.append(symbol.toString());
+        if (symbol.getArity() > 0) {
+            s.append("(");
+            for (Term t : subterms) {
+                if (!first) {
+                    s.append(",");
+                }
+                s.append(t.toString());
+                first = false;
+            }
+            s.append(")");
+        }
+        return s.toString();
     }
 }

@@ -6,10 +6,10 @@ public enum FormulaType {
     private int precedence;
 
     FormulaType(int p) {
-	precedence = p;
+        precedence = p;
     }
 
     public int getPrecedence() {
-	return precedence;
+        return precedence;
     }
 }

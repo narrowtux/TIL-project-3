@@ -4,22 +4,24 @@ package de.unikassel.til3.scanner;
 // Wed Dec 25 21:15:10 CET 2013
 //----------------------------------------------------
 
-/** CUP generated class containing symbol constants. */
+/**
+ * CUP generated class containing symbol constants.
+ */
 public class sym {
-  /* terminals */
-  public static final int AND = 2;
-  public static final int FORALL = 8;
-  public static final int RELSYMBOL = 12;
-  public static final int EOF = 0;
-  public static final int FUNSYMBOL = 13;
-  public static final int EXISTS = 7;
-  public static final int IMP = 5;
-  public static final int COMMA = 11;
-  public static final int error = 1;
-  public static final int RPAREN = 10;
-  public static final int BIIMP = 6;
-  public static final int NEG = 4;
-  public static final int LPAREN = 9;
-  public static final int OR = 3;
+    /* terminals */
+    public static final int AND = 2;
+    public static final int FORALL = 8;
+    public static final int RELSYMBOL = 12;
+    public static final int EOF = 0;
+    public static final int FUNSYMBOL = 13;
+    public static final int EXISTS = 7;
+    public static final int IMP = 5;
+    public static final int COMMA = 11;
+    public static final int error = 1;
+    public static final int RPAREN = 10;
+    public static final int BIIMP = 6;
+    public static final int NEG = 4;
+    public static final int LPAREN = 9;
+    public static final int OR = 3;
 }
 

@@ -6,23 +6,23 @@ public class FunctionSymbol {
     private int arity;
 
     public FunctionSymbol(String n, int a) {
-	name = n;
-	arity = a;
+        name = n;
+        arity = a;
     }
 
     public String getName() {
-	return name;
+        return name;
     }
 
     public int getArity() {
-	return arity;
+        return arity;
     }
 
     public String toString() {
-	return name;
+        return name;
     }
 
     public boolean equals(FunctionSymbol s) {
-	return name.equals(s.getName()) && arity == s.getArity();
+        return name.equals(s.getName()) && arity == s.getArity();
     }
 }
