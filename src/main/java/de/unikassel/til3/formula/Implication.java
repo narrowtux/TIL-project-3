@@ -1,20 +1,9 @@
 package de.unikassel.til3.formula;
 
-public class Implication extends Formula {
+public class Implication extends BinaryFormula {
 
-    private Formula left_arg, right_arg;
-
-    public Implication(Formula f, Formula g) {
-        left_arg = f;
-        right_arg = g;
-    }
-
-    public Formula getLeftArg() {
-        return left_arg;
-    }
-
-    public Formula getRightArg() {
-        return right_arg;
+    public Implication(Formula left_arg, Formula right_arg) {
+        super(left_arg, right_arg);
     }
 
     public FormulaType getType() {
@@ -41,5 +30,15 @@ public class Implication extends Formula {
             s.append(")");
         }
         return s;
+    }
+
+    @Override
+    public boolean isInPositiveNormalForm() {
+        return false;
+    }
+
+    @Override
+    public boolean isInPrenexNormalForm() {
+        return false;
     }
 }

@@ -35,4 +35,19 @@ public class RelationFormula extends Formula {
         }
         return s;
     }
+
+    @Override
+    public boolean isAtom() {
+        return true;
+    }
+
+    @Override
+    public boolean isLiteral() {
+        return true;
+    }
+
+    @Override
+    public boolean containsQuantifiers() {
+        return false;
+    }
 }

@@ -6,7 +6,6 @@ package de.unikassel.til3.scanner;
 
 import de.unikassel.til3.formula.*;
 import de.unikassel.til3.term.Term;
-import java_cup.runtime.*;
 
 import java.util.Vector;
 
@@ -274,7 +273,7 @@ class CUP$parser$actions {
                 int fleft = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).left;
                 int fright = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).right;
                 Formula f = (Formula) ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-                RESULT = new ForallQuantification(x, f);
+                RESULT = new ForallQuantifier(x, f);
                 CUP$parser$result = parser.getSymbolFactory().newSymbol("formula", 0, ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)), ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
             }
             return CUP$parser$result;
@@ -289,7 +288,7 @@ class CUP$parser$actions {
                 int fleft = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).left;
                 int fright = ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).right;
                 Formula f = (Formula) ((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-                RESULT = new ExistsQuantification(x, f);
+                RESULT = new ExistsQuantifier(x, f);
                 CUP$parser$result = parser.getSymbolFactory().newSymbol("formula", 0, ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top - 2)), ((java_cup.runtime.Symbol) CUP$parser$stack.peek()), RESULT);
             }
             return CUP$parser$result;

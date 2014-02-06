@@ -1,17 +1,12 @@
 package de.unikassel.til3.formula;
 
-public class ExistsQuantification extends Formula {
+public class ForallQuantifier extends Quantifier {
 
-    private Formula arg;
     private String variable;
 
-    public ExistsQuantification(String v, Formula f) {
-        arg = f;
+    public ForallQuantifier(String v, Formula arg) {
+        super(arg);
         variable = v;
-    }
-
-    public Formula getArg() {
-        return arg;
     }
 
     public String getVariable() {
@@ -19,13 +14,13 @@ public class ExistsQuantification extends Formula {
     }
 
     public FormulaType getType() {
-        return FormulaType.EXISTS;
+        return FormulaType.FORALL;
     }
 
     public StringBuffer toString(StringBuffer s) {
         boolean par = arg.getType().getPrecedence() < this.getType().getPrecedence();
 
-        s.append("EXISTS ");
+        s.append("FORALL ");
         s.append(variable);
         s.append(" ");
         if (par) {

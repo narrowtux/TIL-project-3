@@ -1,17 +1,11 @@
 package de.unikassel.til3.formula;
 
-public class ForallQuantification extends Formula {
-
-    private Formula arg;
+public class ExistsQuantifier extends Quantifier {
     private String variable;
 
-    public ForallQuantification(String v, Formula f) {
-        arg = f;
+    public ExistsQuantifier(String v, Formula arg) {
+        super(arg);
         variable = v;
-    }
-
-    public Formula getArg() {
-        return arg;
     }
 
     public String getVariable() {
@@ -19,13 +13,13 @@ public class ForallQuantification extends Formula {
     }
 
     public FormulaType getType() {
-        return FormulaType.FORALL;
+        return FormulaType.EXISTS;
     }
 
     public StringBuffer toString(StringBuffer s) {
         boolean par = arg.getType().getPrecedence() < this.getType().getPrecedence();
 
-        s.append("FORALL ");
+        s.append("EXISTS ");
         s.append(variable);
         s.append(" ");
         if (par) {
@@ -36,5 +30,10 @@ public class ForallQuantification extends Formula {
             s.append(")");
         }
         return s;
+    }
+
+    @Override
+    public boolean isInSkolemNormalForm() {
+        return false;
     }
 }

@@ -1,20 +1,9 @@
 package de.unikassel.til3.formula;
 
-public class Conjunction extends Formula {
+public class Conjunction extends BinaryFormula {
 
-    private Formula left_arg, right_arg;
-
-    public Conjunction(Formula f, Formula g) {
-        left_arg = f;
-        right_arg = g;
-    }
-
-    public Formula getLeftArg() {
-        return left_arg;
-    }
-
-    public Formula getRightArg() {
-        return right_arg;
+    public Conjunction(Formula left, Formula right) {
+        super(left, right);
     }
 
     public FormulaType getType() {

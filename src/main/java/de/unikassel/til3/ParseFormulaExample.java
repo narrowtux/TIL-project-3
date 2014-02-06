@@ -16,13 +16,16 @@ public class ParseFormulaExample {
 
         try {
             // parser p = new parser(new Scanner(new InputStreamReader(System.in)));
-            parser p = new parser(new Scanner(new StringReader("- EXISTS x ( R(f(x), g(g(c,x))) & -P(f(f(d))))")));
+            parser p = new parser(new Scanner(new StringReader("FORALL x EXISTS y A(x, y) & EXISTS z B(x,y,z)")));
 
             Formula f = (Formula) p.parse().value;
-            System.out.println("Input: " + f.toString());
+            System.out.println("Input:                   " + f.toString());
+            System.out.println("In positive normal form: " + f.isInPositiveNormalForm());
+            System.out.println("In prenex normal form:   " + f.isInPrenexNormalForm());
+            System.out.println("In skolem normal form:   " + f.isInSkolemNormalForm());
 
         } catch (Exception e) {
-            System.out.println("Something went seriously wrong: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
     }

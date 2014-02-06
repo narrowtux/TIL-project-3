@@ -1,15 +1,8 @@
 package de.unikassel.til3.formula;
 
-public class Negation extends Formula {
-
-    private Formula arg;
-
-    public Negation(Formula f) {
-        arg = f;
-    }
-
-    public Formula getArg() {
-        return arg;
+public class Negation extends UnaryFormula {
+    public Negation(Formula arg) {
+        super(arg);
     }
 
     public FormulaType getType() {
@@ -28,5 +21,20 @@ public class Negation extends Formula {
             s.append(")");
         }
         return s;
+    }
+
+    @Override
+    public boolean isLiteral() {
+        return arg.isAtom();
+    }
+
+    @Override
+    public boolean isInPositiveNormalForm() {
+        return isLiteral();
+    }
+
+    @Override
+    public boolean containsQuantifiers() {
+        return arg.isQuantifier() || arg.containsQuantifiers();
     }
 }
