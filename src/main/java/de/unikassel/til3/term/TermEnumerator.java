@@ -2,8 +2,8 @@ package de.unikassel.til3.term;
 
 import de.unikassel.til3.formula.FunctionSymbol;
 
-import java.util.LinkedList;
 import java.util.Queue;
+import java.util.LinkedList;
 import java.util.Vector;
 
 public class TermEnumerator {
@@ -22,11 +22,12 @@ public class TermEnumerator {
     }
 
     public Term getNext() {
-        Term termpattern, t = null;
+        Term termpattern,t=null;
         boolean found = false;
 
         while (!found && hasNext()) {
             termpattern = worklist.poll();
+            //	    System.out.println("Next term pattern: " + termpattern.toString());
             t = instantiate(termpattern, signature);
             if (isFullyInstantiated(t)) {
                 found = true;
@@ -44,7 +45,7 @@ public class TermEnumerator {
         if (t instanceof Placeholder) {
             return false;
         }
-        for (Term s : t.getSubterms()) {
+        for (Term s: t.getSubterms()) {
             if (!isFullyInstantiated(s)) {
                 return false;
             }
@@ -54,26 +55,21 @@ public class TermEnumerator {
 
     private static Term instantiate(Term t, Signature sig) {
         Vector<Term> ts = new Vector<Term>();
-        boolean found = false;
+        // boolean found = false;
 
         if (t instanceof Placeholder) {
             FunctionSymbol s = sig.get(((Placeholder) t).getPoint());
             int arity = s.getArity();
-            for (int i = 0; i < arity; i++) {
+            for (int i=0; i<arity; i++) {
                 ts.add(new Placeholder(0));
             }
-            return new Term(s, ts);
+            return new Term(s,ts);
         } else {
-            for (Term s : t.getSubterms()) {
-                if (found || isFullyInstantiated(s)) {
-                    ts.add(t.makeCopy());
-                } else {
-                    ts.add(instantiate(s, sig));
-                    found = true;
-                }
+            for (Term s: t.getSubterms()) {
+                ts.add(instantiate(s, sig));
             }
+            return new Term(t.getTopSymbol(), ts);
         }
-        return new Term(t.getTopSymbol(), ts);
     }
 
     private static boolean increaseToNextTerm(Term t, int l, boolean b) {
@@ -94,7 +90,7 @@ public class TermEnumerator {
                 return false;
             }
         } else {
-            for (Term s : t.getSubterms()) {
+            for (Term s: t.getSubterms()) {
                 if (increasefurther) {
                     increasefurther = increaseToNextTerm(s, l, increasefurther);
                 }
@@ -141,4 +137,3 @@ class Placeholder extends Term {
         return new Placeholder(point);
     }
 }
-
