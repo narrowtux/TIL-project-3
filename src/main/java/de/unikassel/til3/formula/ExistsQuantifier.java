@@ -1,15 +1,10 @@
 package de.unikassel.til3.formula;
 
 public class ExistsQuantifier extends Quantifier {
-    private String variable;
 
     public ExistsQuantifier(String v, Formula arg) {
-        super(arg);
+        super(v, arg);
         variable = v;
-    }
-
-    public String getVariable() {
-        return variable;
     }
 
     public FormulaType getType() {

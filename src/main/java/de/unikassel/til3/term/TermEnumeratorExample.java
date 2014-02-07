@@ -5,8 +5,6 @@ import de.unikassel.til3.formula.FunctionSymbol;
 public class TermEnumeratorExample {
 
     public static void main(String[] args) {
-
-
         // create a new signature
         // signatures contain functions symbols only!
         Signature sig = new Signature();

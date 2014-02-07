@@ -2,15 +2,8 @@ package de.unikassel.til3.formula;
 
 public class ForallQuantifier extends Quantifier {
 
-    private String variable;
-
     public ForallQuantifier(String v, Formula arg) {
-        super(arg);
-        variable = v;
-    }
-
-    public String getVariable() {
-        return variable;
+        super(v, arg);
     }
 
     public FormulaType getType() {

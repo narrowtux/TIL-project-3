@@ -7,6 +7,8 @@ public abstract class BinaryFormula extends Formula {
     protected Formula left_arg, right_arg;
 
     protected BinaryFormula(Formula left_arg, Formula right_arg) {
+        left_arg.parent = this;
+        right_arg.parent = this;
         this.left_arg = left_arg;
         this.right_arg = right_arg;
     }
@@ -32,5 +34,21 @@ public abstract class BinaryFormula extends Formula {
     @Override
     public boolean isInSkolemNormalForm() {
         return isInPrenexNormalForm() && left_arg.isInSkolemNormalForm() && right_arg.isInSkolemNormalForm();
+    }
+
+    @Override
+    public void walkDown(FormulaDownWalker walker) {
+        Formula replace_left = walker.handle(left_arg);
+        while (replace_left != null) {
+            left_arg = replace_left;
+            replace_left = walker.handle(left_arg);
+        }
+        Formula replace_right = walker.handle(right_arg);
+        while (replace_right != null) {
+            right_arg = replace_right;
+            replace_right = walker.handle(right_arg);
+        }
+        left_arg.walkDown(walker);
+        right_arg.walkDown(walker);
     }
 }

@@ -50,4 +50,9 @@ public class RelationFormula extends Formula {
     public boolean containsQuantifiers() {
         return false;
     }
+
+    @Override
+    public void walkDown(FormulaDownWalker walker) {
+        // nothing to do!
+    }
 }

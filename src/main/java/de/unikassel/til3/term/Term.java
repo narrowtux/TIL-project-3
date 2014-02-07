@@ -1,10 +1,12 @@
 package de.unikassel.til3.term;
 
 import de.unikassel.til3.formula.FunctionSymbol;
+import de.unikassel.til3.formula.Walkable;
+import de.unikassel.til3.formula.Walker;
 
 import java.util.Vector;
 
-public class Term {
+public class Term implements Walkable<Term> {
 
     private FunctionSymbol symbol;
     private Vector<Term> subterms;
@@ -54,5 +56,36 @@ public class Term {
             s.append(")");
         }
         return s.toString();
+    }
+
+    @Override
+    public void walkDown(Walker<Term> walker) {
+        for (int i = 0; i < subterms.size(); i++) {
+            Term term = subterms.elementAt(i);
+            Term replace = walker.handle(term);
+            while (replace != null) {
+                term = replace;
+                replace = walker.handle(term);
+            }
+            subterms.set(i, term);
+        }
+    }
+
+    public static Term walkDown(Term term, Walker<Term> walker) {
+        Term replace = walker.handle(term);
+        while (replace != null) {
+            term = replace;
+            replace = walker.handle(term);
+        }
+        for (int i = 0; i < term.subterms.size(); i++) {
+            Term term1 = term.subterms.elementAt(i);
+            replace = walker.handle(term1);
+            while (replace != null) {
+                term1 = replace;
+                replace = walker.handle(term1);
+            }
+            term.subterms.set(i, term1);
+        }
+        return term;
     }
 }

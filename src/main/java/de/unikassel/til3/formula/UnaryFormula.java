@@ -7,6 +7,7 @@ public abstract class UnaryFormula extends Formula {
     protected Formula arg;
 
     protected UnaryFormula(Formula arg) {
+        arg.parent = this;
         this.arg = arg;
     }
 
@@ -17,5 +18,15 @@ public abstract class UnaryFormula extends Formula {
     @Override
     public boolean isInSkolemNormalForm() {
         return isInPrenexNormalForm() && arg.isInSkolemNormalForm();
+    }
+
+    @Override
+    public void walkDown(FormulaDownWalker walker) {
+        Formula replace = walker.handle(arg);
+        while (replace != null) {
+            arg = replace;
+            replace = walker.handle(arg);
+        }
+        arg.walkDown(walker);
     }
 }

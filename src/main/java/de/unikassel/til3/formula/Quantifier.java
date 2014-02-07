@@ -4,8 +4,14 @@ package de.unikassel.til3.formula;
  * Created by tux on 06.02.14.
  */
 public abstract class Quantifier extends UnaryFormula {
-    protected Quantifier(Formula arg) {
+    protected String variable;
+    protected Quantifier(String variable, Formula arg) {
         super(arg);
+        this.variable = variable;
+    }
+
+    public String getVariable() {
+        return variable;
     }
 
     @Override

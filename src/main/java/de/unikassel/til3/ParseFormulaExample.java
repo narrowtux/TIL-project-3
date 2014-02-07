@@ -5,9 +5,14 @@ import formula;
 */
 
 import de.unikassel.til3.formula.Formula;
+import de.unikassel.til3.formula.walkers.PushNegationDownWalker;
+import de.unikassel.til3.formula.walkers.PushQuantifiersUpWalker;
+import de.unikassel.til3.formula.walkers.ReplaceImplicationsWalker;
 import de.unikassel.til3.scanner.Scanner;
 import de.unikassel.til3.scanner.parser;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 
 public class ParseFormulaExample {
@@ -15,14 +20,23 @@ public class ParseFormulaExample {
     public static void main(String[] args) {
 
         try {
-            // parser p = new parser(new Scanner(new InputStreamReader(System.in)));
-            parser p = new parser(new Scanner(new StringReader("FORALL x EXISTS y A(x, y) & EXISTS z B(x,y,z)")));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                parser p = new parser(new Scanner(new StringReader(line)));
 
-            Formula f = (Formula) p.parse().value;
-            System.out.println("Input:                   " + f.toString());
-            System.out.println("In positive normal form: " + f.isInPositiveNormalForm());
-            System.out.println("In prenex normal form:   " + f.isInPrenexNormalForm());
-            System.out.println("In skolem normal form:   " + f.isInSkolemNormalForm());
+                Formula f = (Formula) p.parse().value;
+                f = Formula.walkDown(f, new ReplaceImplicationsWalker());
+                f = Formula.walkDown(f, new PushNegationDownWalker());
+                while(!f.isInPrenexNormalForm()) {
+                    f = Formula.walkDown(f, new PushQuantifiersUpWalker());
+                }
+                System.out.println("Input:                   " + f.toString());
+                System.out.println("In positive normal form: " + f.isInPositiveNormalForm());
+                System.out.println("In prenex normal form:   " + f.isInPrenexNormalForm());
+                System.out.println("In skolem normal form:   " + f.isInSkolemNormalForm());
+            }
+
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
