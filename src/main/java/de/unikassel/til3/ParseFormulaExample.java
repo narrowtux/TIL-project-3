@@ -5,6 +5,7 @@ import formula;
 */
 
 import de.unikassel.til3.formula.Formula;
+import de.unikassel.til3.formula.walkers.EliminateExistsQuantifierWalker;
 import de.unikassel.til3.formula.walkers.PushNegationDownWalker;
 import de.unikassel.til3.formula.walkers.PushQuantifiersUpWalker;
 import de.unikassel.til3.formula.walkers.ReplaceImplicationsWalker;
@@ -26,10 +27,15 @@ public class ParseFormulaExample {
                 parser p = new parser(new Scanner(new StringReader(line)));
 
                 Formula f = (Formula) p.parse().value;
-                f = Formula.walkDown(f, new ReplaceImplicationsWalker());
-                f = Formula.walkDown(f, new PushNegationDownWalker());
-                while(!f.isInPrenexNormalForm()) {
+                if (!f.isInPositiveNormalForm()) {
+                    f = Formula.walkDown(f, new ReplaceImplicationsWalker());
+                    f = Formula.walkDown(f, new PushNegationDownWalker());
+                }
+                while (!f.isInPrenexNormalForm()) {
                     f = Formula.walkDown(f, new PushQuantifiersUpWalker());
+                }
+                if (!f.isInSkolemNormalForm()) {
+                    f = Formula.walkDown(f, new EliminateExistsQuantifierWalker());
                 }
                 System.out.println("Input:                   " + f.toString());
                 System.out.println("In positive normal form: " + f.isInPositiveNormalForm());

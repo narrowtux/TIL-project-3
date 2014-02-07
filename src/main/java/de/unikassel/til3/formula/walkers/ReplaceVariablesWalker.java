@@ -4,16 +4,23 @@ import de.unikassel.til3.formula.*;
 import de.unikassel.til3.term.Term;
 
 import javax.management.relation.Relation;
+import java.util.Vector;
 
 /**
  * Created by tux on 07.02.14.
  */
 public class ReplaceVariablesWalker implements Formula.FormulaDownWalker {
-    private String from, to;
+    private String from;
+    private Term to;
     private ReplaceVariablesInTermsWalker termsWalker = new ReplaceVariablesInTermsWalker();
     private static int variableCounter = 0;
 
     public ReplaceVariablesWalker(String from, String to) {
+        this.from = from;
+        this.to = new Term(new FunctionSymbol(to, 0), new Vector<Term>());
+    }
+
+    public ReplaceVariablesWalker(String from, Term to) {
         this.from = from;
         this.to = to;
     }
@@ -23,13 +30,13 @@ public class ReplaceVariablesWalker implements Formula.FormulaDownWalker {
         if (f instanceof ExistsQuantifier) {
             ExistsQuantifier eq = (ExistsQuantifier) f;
             if (eq.getVariable().equals(from)) {
-                return new ExistsQuantifier(to, eq.getArg());
+                return new ExistsQuantifier(to.getTopSymbol().getName(), eq.getArg());
             }
         }
         if (f instanceof ForallQuantifier) {
             ForallQuantifier fa = (ForallQuantifier) f;
             if (fa.getVariable().equals(from)) {
-                return new ForallQuantifier(to, fa.getArg());
+                return new ForallQuantifier(to.getTopSymbol().getName(), fa.getArg());
             }
         }
         if (f instanceof RelationFormula) {
@@ -49,7 +56,7 @@ public class ReplaceVariablesWalker implements Formula.FormulaDownWalker {
         @Override
         public Term handle(Term on) {
             if (on.getTopSymbol().getName().equals(from)) {
-                return new Term(new FunctionSymbol(to, on.getTopSymbol().getArity()), on.getSubterms());
+                return to;
             }
             return null;
         }
