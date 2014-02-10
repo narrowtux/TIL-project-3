@@ -9,7 +9,7 @@ import java.util.Vector;
 /**
  * Created by tux on 07.02.14.
  */
-public class ReplaceVariablesWalker implements Formula.FormulaDownWalker {
+public class ReplaceVariablesWalker implements Walker<Formula> {
     private String from;
     private Term to;
     private ReplaceVariablesInTermsWalker termsWalker = new ReplaceVariablesInTermsWalker();

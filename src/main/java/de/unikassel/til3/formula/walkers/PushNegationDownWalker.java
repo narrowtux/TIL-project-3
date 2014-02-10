@@ -5,7 +5,7 @@ import de.unikassel.til3.formula.*;
 /**
  * Created by tux on 07.02.14.
  */
-public class PushNegationDownWalker implements Formula.FormulaDownWalker {
+public class PushNegationDownWalker implements Walker<Formula> {
     @Override
     public Formula handle(Formula f) {
         if (f instanceof Negation) {

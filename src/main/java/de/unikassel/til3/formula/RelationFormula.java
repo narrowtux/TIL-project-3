@@ -52,7 +52,7 @@ public class RelationFormula extends Formula {
     }
 
     @Override
-    public void walkDown(FormulaDownWalker walker) {
+    public void walkDown(Walker<Formula> walker) {
         // nothing to do!
     }
 }

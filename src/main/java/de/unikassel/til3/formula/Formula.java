@@ -73,10 +73,8 @@ public abstract class Formula implements Walkable<Formula> {
     }
 
     public void walkDown(Walker<Formula> walker) {
-        walkDown((FormulaDownWalker) walker);
+        // reimplement
     }
-
-    protected abstract void walkDown(FormulaDownWalker walker);
 
     /**
      * Walks the given walker down the formula (from root to leaves).
@@ -85,7 +83,7 @@ public abstract class Formula implements Walkable<Formula> {
      * @param walker the walker to use
      * @return the replacement of the root
      */
-    public static Formula walkDown(Formula formula, FormulaDownWalker walker) {
+    public static Formula walkDown(Formula formula, Walker<Formula> walker) {
         Formula replace = walker.handle(formula);
         while (replace != null) {
             formula = replace;
@@ -95,13 +93,5 @@ public abstract class Formula implements Walkable<Formula> {
         return formula;
     }
 
-    public interface FormulaDownWalker extends Walker<Formula> {
-        /**
-         * Handles a formula
-         * @param f the formula to handle
-         * @return the formula to replace this, or null if no replacement
-         */
-        public Formula handle(Formula f);
-    }
 }
 

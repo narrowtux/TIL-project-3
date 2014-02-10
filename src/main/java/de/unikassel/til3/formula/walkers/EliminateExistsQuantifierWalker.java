@@ -1,15 +1,12 @@
 package de.unikassel.til3.formula.walkers;
 
 import com.sun.tools.javac.code.Type;
-import de.unikassel.til3.formula.ExistsQuantifier;
-import de.unikassel.til3.formula.ForallQuantifier;
-import de.unikassel.til3.formula.Formula;
-import de.unikassel.til3.formula.FunctionSymbol;
+import de.unikassel.til3.formula.*;
 import de.unikassel.til3.term.Term;
 
 import java.util.Vector;
 
-public class EliminateExistsQuantifierWalker implements Formula.FormulaDownWalker {
+public class EliminateExistsQuantifierWalker implements Walker<Formula> {
     private String lastForAllVariable = null;
 
     @Override

@@ -21,7 +21,7 @@ public abstract class UnaryFormula extends Formula {
     }
 
     @Override
-    public void walkDown(FormulaDownWalker walker) {
+    public void walkDown(Walker<Formula> walker) {
         Formula replace = walker.handle(arg);
         while (replace != null) {
             arg = replace;

@@ -5,7 +5,7 @@ import de.unikassel.til3.formula.*;
 /**
  * Created by tux on 07.02.14.
  */
-public class ReplaceImplicationsWalker implements Formula.FormulaDownWalker {
+public class ReplaceImplicationsWalker implements Walker<Formula> {
     @Override
     public Formula handle(Formula f) {
         if (f instanceof Biimplication) {

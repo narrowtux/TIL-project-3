@@ -3,6 +3,7 @@ package de.unikassel.til3.formula.walkers;
 import de.unikassel.til3.formula.BinaryFormula;
 import de.unikassel.til3.formula.Formula;
 import de.unikassel.til3.formula.Quantifier;
+import de.unikassel.til3.formula.Walker;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -10,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * Created by tux on 07.02.14.
  */
-public class PushQuantifiersUpWalker implements Formula.FormulaDownWalker {
+public class PushQuantifiersUpWalker implements Walker<Formula> {
     @Override
     public Formula handle(Formula f) {
         try {
@@ -21,8 +22,7 @@ public class PushQuantifiersUpWalker implements Formula.FormulaDownWalker {
                 Constructor leftConstructor = null, rightConstructor = null;
 
                 Class operatorClass = f.getClass();
-                Constructor operatorConstructor = null;
-                operatorConstructor = operatorClass.getConstructor(Formula.class, Formula.class);
+                Constructor operatorConstructor = operatorClass.getConstructor(Formula.class, Formula.class);
 
                 if (left instanceof Quantifier) {
                     l = replaceVariable((Quantifier) left);

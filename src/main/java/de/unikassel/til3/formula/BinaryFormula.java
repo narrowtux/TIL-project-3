@@ -37,7 +37,7 @@ public abstract class BinaryFormula extends Formula {
     }
 
     @Override
-    public void walkDown(FormulaDownWalker walker) {
+    public void walkDown(Walker<Formula> walker) {
         Formula replace_left = walker.handle(left_arg);
         while (replace_left != null) {
             left_arg = replace_left;
