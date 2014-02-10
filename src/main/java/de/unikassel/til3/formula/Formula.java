@@ -8,6 +8,10 @@ public abstract class Formula implements Walkable<Formula> {
 
     protected Formula parent;
 
+    public Formula getParent() {
+        return parent;
+    }
+
     public String toString() {
         return toString(new StringBuffer()).toString();
     }
