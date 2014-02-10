@@ -15,7 +15,7 @@ public class CreateClauseSetWalker implements Walker<Formula> {
 
     @Override
     public Formula handle(final Formula on) {
-        if (on instanceof RelationFormula && on.getParent() == null) {
+        if (on instanceof RelationFormula && (on.getParent() == null || !(on.getParent() instanceof BinaryFormula))) {
             clauseSet.add(new Clause() {{ add((on));}});
         }
         if (on instanceof Conjunction) {

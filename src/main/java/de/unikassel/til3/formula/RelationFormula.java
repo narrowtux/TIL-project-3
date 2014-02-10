@@ -14,6 +14,10 @@ public class RelationFormula extends Formula {
         name = s;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public Vector<Term> getTerms() {
         return terms;
     }
@@ -54,5 +58,10 @@ public class RelationFormula extends Formula {
     @Override
     public void walkDown(Walker<Formula> walker) {
         // nothing to do!
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
     }
 }

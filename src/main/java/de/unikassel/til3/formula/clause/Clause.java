@@ -1,14 +1,14 @@
 package de.unikassel.til3.formula.clause;
 
 import de.unikassel.til3.formula.Formula;
+import de.unikassel.til3.formula.Negation;
+import de.unikassel.til3.formula.RelationFormula;
+import org.sat4j.core.VecInt;
 
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 
-/**
- * Created by tux on 10.02.14.
- */
-public class Clause extends HashSet<Formula> {
+public class Clause extends LinkedHashSet<Formula> implements Cloneable {
     @Override
     public boolean add(Formula formula) {
         if (!formula.isLiteral()) {
@@ -25,5 +25,29 @@ public class Clause extends HashSet<Formula> {
             }
         }
         return super.addAll(c);
+    }
+
+    public VecInt toVecInt() {
+        int vec[] = new int[size()];
+        int i = 0;
+        for (Formula literal : this) {
+            int key;
+            if (literal instanceof RelationFormula) {
+                key = ClauseSet.getKeyForRelation((RelationFormula) literal);
+            } else {
+                key = -ClauseSet.getKeyForRelation((RelationFormula) ((Negation) literal).getArg());
+            }
+            vec[i] = key;
+            i++;
+        }
+        VecInt ret = new VecInt(vec);
+        return ret;
+    }
+
+    @Override
+    public Clause clone() {
+        Clause ret = new Clause();
+        ret.addAll(this);
+        return ret;
     }
 }
